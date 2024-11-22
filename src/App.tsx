@@ -12,9 +12,9 @@ export default function App() {
                 <NavBar/>
             </GridItem>
             <Show above="lg">
-                <GridItem area='lhs' bg={'red'}>Left-side</GridItem>
+                <GridItem area='lhs'></GridItem>
             </Show>
-            <GridItem area='main' bg={'dodgerblue'}>Main</GridItem>
+            <GridItem area='main'></GridItem>
         </Grid>
     );
 }
