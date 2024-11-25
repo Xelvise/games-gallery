@@ -6,10 +6,10 @@ import theme from "./theme";
 import App from './App.tsx'
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+//   <StrictMode>
     <ChakraProvider theme={theme}>
         <ColorModeScript initialColorMode={theme.config.initialColorMode}/>
         <App />
     </ChakraProvider>
-  </StrictMode>,
+//   </StrictMode>,
 )
