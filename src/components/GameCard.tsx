@@ -8,8 +8,14 @@ interface Props {
 }
 
 export default function GameCard({game}: Props) {
-    const splittedURL = game.background_image.split('games')
-    const croppedImgURL = splittedURL[0] + 'crop/600/400/games' + splittedURL[1]
+    let croppedImgURL = ''
+    if (game.background_image.includes('games')) {
+        const splittedURL = game.background_image.split('games')
+        croppedImgURL = splittedURL[0] + 'crop/600/400/games' + splittedURL[1]
+    } else if (game.background_image.includes('screenshots')) {
+        const splittedURL = game.background_image.split('screenshots')
+        croppedImgURL = splittedURL[0] + 'crop/600/400/screenshots' + splittedURL[1]
+    }
 
     return (
     <Card borderRadius={10} overflow='hidden'>

@@ -18,8 +18,10 @@ export default function fetchData<T>(endpoint: string, queryParam?: AxiosRequest
         serverURL.get<ResponseSchema<T>>(endpoint, {...queryParam, signal: controller.signal})    //The type annotation lets us know the data structure of the 'response' obj
             .then(({data}) => setData(data.results))
             .catch(err => {
-                if (err instanceof CanceledError) return null
-                else setError(err.message)
+                if (!(err instanceof CanceledError)) {
+                    console.log(err);
+                    setError(err.message);
+                }
             })
             .finally(() => setLoadingState(false));
         return () => controller.abort()    // a clean-up function
