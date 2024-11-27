@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import serverURL from '../services/api-client'
 import { AxiosRequestConfig, CanceledError } from "axios";
 
-interface FetchResponse<T> {
+interface ResponseSchema<T> {
     count: number;
     results: T[];
 }
@@ -15,7 +15,7 @@ export default function fetchData<T>(endpoint: string, queryParam?: AxiosRequest
     const controller = new AbortController();
     useEffect(() => {
         setLoadingState(true)
-        serverURL.get<FetchResponse<T>>(endpoint, {...queryParam, signal: controller.signal})    //The type annotation lets us know the data structure of the 'response' obj
+        serverURL.get<ResponseSchema<T>>(endpoint, {...queryParam, signal: controller.signal})    //The type annotation lets us know the data structure of the 'response' obj
             .then(({data}) => setData(data.results))
             .catch(err => {
                 if (err instanceof CanceledError) return null
