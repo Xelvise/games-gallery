@@ -1,10 +1,10 @@
 import { Card, CardBody, Heading, HStack, Image, Text } from "@chakra-ui/react";
-import { GameObject } from "../hooks/fetchGames"
+import { Game } from "../hooks/fetchGames"
 import PlatformIconTray from "./PlatformIconTray";
 import CriticScore from "./CriticScore";
 
 interface Props {
-    game: GameObject;
+    game: Game;
 }
 
 export default function GameCard({game}: Props) {
@@ -12,7 +12,7 @@ export default function GameCard({game}: Props) {
     const croppedImgURL = splittedURL[0] + 'crop/600/400/games' + splittedURL[1]
 
     return (
-    <Card>
+    <Card borderRadius={10} overflow='hidden'>
         <Image src={croppedImgURL} alt={game.name}/>
         <CardBody>
             <Heading fontSize='xl'>{game.name}</Heading>

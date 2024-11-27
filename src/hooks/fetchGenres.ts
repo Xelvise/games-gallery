@@ -1,6 +1,6 @@
 import fetchData from "./fetchData";
 
-interface GenreObject {
+export interface Genre {
     id: number;
     name: string;
     slug: string;
@@ -9,5 +9,5 @@ interface GenreObject {
 }
 
 export default function fetchGenres() {
-    return fetchData<GenreObject>('/genres')
+    return fetchData<Genre>('/genres')
 }

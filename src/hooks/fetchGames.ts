@@ -1,6 +1,6 @@
 import fetchData from "./fetchData";
 
-export interface GameObject {
+export interface Game {
     id: number;
     name: string;
     background_image: string;
@@ -14,6 +14,10 @@ export interface Platform {
     slug: string;
 }
 
-export default function fetchGames() {
-    return fetchData<GameObject>('/games')
+export default function fetchGames(selectedGenre: string | null) {
+    return fetchData<Game>(
+        '/games', 
+        { params: { genres: selectedGenre } }, 
+        [selectedGenre]
+    )
 }
