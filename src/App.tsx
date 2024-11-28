@@ -10,6 +10,7 @@ export default function App() {
     const [selectedGenre, setSelectedGenre] = useState<string|null>(null)
     const [selectedPlatform, setSelectedPlatform] = useState<number|null>(null)
     const [selectedSort, setSelectedSort] = useState<string|null>(null)
+    const [searchQuery, setSearchQuery] = useState<string|null>(null)
 
     const onSelectGenre = (genreName: string) => {
         setSelectedGenre(genreName);
@@ -20,6 +21,10 @@ export default function App() {
     const onSort = (sortBy: string|null) => {
         setSelectedSort(sortBy);
     }
+    const onSearch = (query: string) => {
+        setSearchQuery(query);
+    }
+    
     return (
     // base: two rows with one column
     // lg: two rows, with row-2 splitted into two columns
@@ -29,7 +34,7 @@ export default function App() {
         base: '1fr', lg: '250px 1fr'
     }}>
         <GridItem area='nav'>
-            <NavBar/>
+            <NavBar onSearch={onSearch}/>
         </GridItem>
         <Show above="lg">
             <GridItem area='lhs' paddingX={5}>
@@ -41,7 +46,7 @@ export default function App() {
                 <PlatformSelector onSelectPlatform={onSelectPlatform}/>
                 <SortSelector onSort={onSort}/>
             </HStack>
-            <GameGrid selectedGenre={selectedGenre} selectedPlatform={selectedPlatform} selectedSort={selectedSort}/>
+            <GameGrid selectedGenre={selectedGenre} selectedPlatform={selectedPlatform} selectedSort={selectedSort} searchQuery={searchQuery}/>
         </GridItem>
     </Grid>
     );

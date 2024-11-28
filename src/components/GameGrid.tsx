@@ -7,10 +7,11 @@ interface Props {
     selectedGenre: string | null;
     selectedPlatform: number | null;
     selectedSort: string | null;
+    searchQuery: string | null;
 }
 
-export default function GameGrid({ selectedGenre, selectedPlatform, selectedSort }: Props) {
-    const {data, error, isLoading} = fetchGames(selectedGenre, selectedPlatform, selectedSort);
+export default function GameGrid({ selectedGenre, selectedPlatform, selectedSort, searchQuery }: Props) {
+    const {data, error, isLoading} = fetchGames(selectedGenre, selectedPlatform, selectedSort, searchQuery);
 
     return (
         <div>
