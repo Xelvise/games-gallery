@@ -14,10 +14,10 @@ export interface Platform {
     slug: string;
 }
 
-export default function fetchGames(selectedGenre: string|null, selectedPlatform: number|null) {
+export default function fetchGames(selectedGenre: string|null, selectedPlatform: number|null, selectedSort: string|null) {
     return fetchData<Game>(
         '/games', 
-        { params: { genres: selectedGenre, platforms: selectedPlatform } }, 
-        [selectedGenre, selectedPlatform]
+        { params: { genres: selectedGenre, platforms: selectedPlatform, ordering: selectedSort } }, 
+        [selectedGenre, selectedPlatform, selectedSort]
     )
 }

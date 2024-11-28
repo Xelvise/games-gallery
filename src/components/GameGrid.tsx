@@ -2,15 +2,15 @@ import { SimpleGrid, Text } from '@chakra-ui/react';
 import fetchGames, { Game } from '../hooks/fetchGames';
 import GameCard from './GameCard';
 import GameCardSkeleton from './GameCardSkeleton';
-import fetchPlatforms from '../hooks/fetchPlatforms';
 
 interface Props {
     selectedGenre: string | null;
     selectedPlatform: number | null;
+    selectedSort: string | null;
 }
 
-export default function GameGrid({ selectedGenre, selectedPlatform }: Props) {
-    const {data, error, isLoading} = fetchGames(selectedGenre, selectedPlatform);
+export default function GameGrid({ selectedGenre, selectedPlatform, selectedSort }: Props) {
+    const {data, error, isLoading} = fetchGames(selectedGenre, selectedPlatform, selectedSort);
 
     return (
         <div>
