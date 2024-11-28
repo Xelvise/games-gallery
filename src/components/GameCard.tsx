@@ -28,8 +28,11 @@ export default function GameCard({game}: Props) {
 
             <HStack justifyContent={"space-between"}>
                 <HStack marginY={1}>
-                    {game.parent_platforms.map(({platform}) =>
-                        <PlatformIconTray key={platform.id} platform={platform}/>)}
+                    {game.parent_platforms
+                        ? game.parent_platforms.map(({platform}) =>
+                            <PlatformIconTray key={platform.id} platform={platform}/>)
+                        : null
+                    }
                 </HStack>
 
                 <CriticScore score={game.metacritic}/>

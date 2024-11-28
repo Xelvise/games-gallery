@@ -6,23 +6,27 @@ import { useState } from "react";
 import PlatformSelector from "./components/PlatformSelector";
 import SortSelector from "./components/SortSelector";
 
+export interface GameQuery {
+    genre: string|null;
+    platformId: number|null;
+    sortOrder: string|null;
+    searchString: string|null
+}
+
 export default function App() {
-    const [selectedGenre, setSelectedGenre] = useState<string|null>(null)
-    const [selectedPlatform, setSelectedPlatform] = useState<number|null>(null)
-    const [selectedSort, setSelectedSort] = useState<string|null>(null)
-    const [searchQuery, setSearchQuery] = useState<string|null>(null)
+    const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
 
     const onSelectGenre = (genreName: string) => {
-        setSelectedGenre(genreName);
+        setGameQuery({...gameQuery, genre: genreName});
     }
     const onSelectPlatform = (id: number|null) => {
-        setSelectedPlatform(id);
+        setGameQuery({...gameQuery, platformId: id});
     }
     const onSort = (sortBy: string|null) => {
-        setSelectedSort(sortBy);
+        setGameQuery({...gameQuery, sortOrder: sortBy});
     }
-    const onSearch = (query: string) => {
-        setSearchQuery(query);
+    const onSearch = (query: string|null) => {
+        setGameQuery({...gameQuery, searchString: query});
     }
     
     return (
@@ -38,7 +42,7 @@ export default function App() {
         </GridItem>
         <Show above="lg">
             <GridItem area='lhs' paddingX={5}>
-                <GenreList onSelectGenre={onSelectGenre} selectedGenre={selectedGenre}/>
+                <GenreList onSelectGenre={onSelectGenre} selectedGenre={gameQuery.genre}/>
             </GridItem>
         </Show>
         <GridItem area='main'>
@@ -46,7 +50,7 @@ export default function App() {
                 <PlatformSelector onSelectPlatform={onSelectPlatform}/>
                 <SortSelector onSort={onSort}/>
             </HStack>
-            <GameGrid selectedGenre={selectedGenre} selectedPlatform={selectedPlatform} selectedSort={selectedSort} searchQuery={searchQuery}/>
+            <GameGrid gameQuery={gameQuery}/>
         </GridItem>
     </Grid>
     );

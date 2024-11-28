@@ -1,33 +1,42 @@
-import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
+import { Input, InputGroup, InputLeftElement, InputRightElement } from "@chakra-ui/react";
 import { useRef } from "react";
 import { BsSearch } from "react-icons/bs";
+import { VscClearAll } from "react-icons/vsc";
 
 export interface SearchProps {
-    onSearch: (search: string) => void;
+    onSearch: (search: string | null) => void;
 }
 
-export default function SearchInput({onSearch}: SearchProps) {
+export default function SearchInput({ onSearch }: SearchProps) {
     const ref = useRef<HTMLInputElement>(null);
+
+    const resetInput = () => {
+        if (ref.current) {
+            ref.current.value = '';
+            onSearch(null);
+        }
+    };
 
     return (
         <form onSubmit={event => {
             event.preventDefault();
-            if (ref.current) onSearch(ref.current.value);
+            if (ref.current) {
+                const trimmedValue = ref.current.value.trim();
+                trimmedValue ? onSearch(trimmedValue) : ref.current.value = '';
+            }
         }}>
             <InputGroup>
-                <InputLeftElement children={<BsSearch/>} marginLeft={10}/>
-                <Input 
-                    ref={ref} 
-                    borderRadius={20} 
-                    placeholder="Search games..." 
-                    variant={'filled'} 
-                    marginLeft={10} 
-                    marginRight={10} 
-                    // onChange={event => {
-                    //     if (ref.current) ref.current.value = event.target.value;
-                    // }}
+                <InputLeftElement children={<BsSearch />} marginLeft={10} />
+                <Input
+                    ref={ref}
+                    borderRadius={20}
+                    placeholder="Search games..."
+                    variant={'filled'}
+                    marginLeft={10}
+                    marginRight={10}
                 />
+                <InputRightElement onClick={resetInput} children={<VscClearAll />} marginRight={50} />
             </InputGroup>
         </form>
-    )
+    );
 }

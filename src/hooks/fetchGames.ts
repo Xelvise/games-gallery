@@ -1,3 +1,4 @@
+import { GameQuery } from "../App";
 import fetchData from "./fetchData";
 
 export interface Game {
@@ -14,10 +15,10 @@ export interface Platform {
     slug: string;
 }
 
-export default function fetchGames(selectedGenre: string|null, selectedPlatform: number|null, selectedSort: string|null, searchQuery: string|null) {
+export default function fetchGames(gameQuery: GameQuery) {
     return fetchData<Game>(
         '/games', 
-        { params: { genres: selectedGenre, platforms: selectedPlatform, ordering: selectedSort, search: searchQuery } }, 
-        [selectedGenre, selectedPlatform, selectedSort, searchQuery]
+        { params: { genres: gameQuery.genre, platforms: gameQuery.platformId, ordering: gameQuery.sortOrder, search: gameQuery.searchString } }, 
+        [gameQuery]
     )
 }
