@@ -1,16 +1,16 @@
 import { Button, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react'
 import { BsChevronDown } from 'react-icons/bs'
-import fetchPlatforms from '../hooks/fetchPlatforms'
+import fetchPlatforms from '../fetch-hooks/fetchPlatforms'
 import { useState } from 'react';
+import { Platform } from '../fetch-hooks/fetchGames';
 
 interface Props {
-    onSelectPlatform: (id: number|null) => void;
+    onSelectPlatform: (platform: Platform|null) => void;
 }
 
 export default function PlatformSelector({onSelectPlatform}: Props) {
     const [platformName, setPlatformName] = useState('All Platforms');
-    const {data, error, isLoading} = fetchPlatforms();
-    if (error) return null;
+    const { data } = fetchPlatforms();
     const newData = [{id: null, name: 'All Platforms', slug: 'all-platforms'},...data]
 
   return (
@@ -18,7 +18,7 @@ export default function PlatformSelector({onSelectPlatform}: Props) {
         <MenuButton as={Button} rightIcon={<BsChevronDown/>}>{platformName}</MenuButton>
         <MenuList>
             {newData.map(platform =>
-                <MenuItem key={platform.id} onClick={() => {setPlatformName(platform.name); onSelectPlatform(platform.id)}}>
+                <MenuItem key={platform.id} onClick={() => {setPlatformName(platform.name); onSelectPlatform(platform as Platform)}}>
                     {platform.name}
                 </MenuItem>
             )}

@@ -1,4 +1,4 @@
-import fetchData from "./fetchData";
+import genreData from '../data/genres'
 
 export interface Genre {
     id: number;
@@ -9,5 +9,5 @@ export interface Genre {
 }
 
 export default function fetchGenres() {
-    return fetchData<Genre>('/genres')
+    return {data: genreData.results, isLoading: false, error: null}
 }

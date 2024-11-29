@@ -1,26 +1,32 @@
-import { Grid, GridItem, HStack, Show } from "@chakra-ui/react";
+import { Grid, GridItem, Heading, HStack, Show } from "@chakra-ui/react";
 import NavBar from "./components/NavBar";
 import GameGrid from "./components/GameGrid";
 import GenreList from "./components/GenreList";
 import { useState } from "react";
 import PlatformSelector from "./components/PlatformSelector";
 import SortSelector from "./components/SortSelector";
+import { Genre } from "./fetch-hooks/fetchGenres";
+import { Platform } from "./fetch-hooks/fetchGames";
+import GameHeading from "./components/GameHeading";
 
-export interface GameQuery {
-    genre: string|null;
-    platformId: number|null;
+export interface GameQuerySchema {
+    genre: Genre|null;
+    platform: Platform|null;
     sortOrder: string|null;
-    searchString: string|null
+    searchString: string|null;
 }
 
 export default function App() {
-    const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
+    const [gameQuery, setGameQuery] = useState<GameQuerySchema>({} as GameQuerySchema);
+    // At first, gameQuery is initialized to a GameQuery object where each property (genre, platform, sortOrder, searchString) is set to null
+    // Hence, gameQuery is an object of state variables which gets updated by the user's actions
 
-    const onSelectGenre = (genreName: string) => {
+    // For the following callbacks, gameQuery object is spread into its individual properties, appending an updated state variable
+    const onSelectGenre = (genreName: Genre) => {
         setGameQuery({...gameQuery, genre: genreName});
     }
-    const onSelectPlatform = (id: number|null) => {
-        setGameQuery({...gameQuery, platformId: id});
+    const onSelectPlatform = (platform: Platform|null) => {
+        setGameQuery({...gameQuery, platform: platform});
     }
     const onSort = (sortBy: string|null) => {
         setGameQuery({...gameQuery, sortOrder: sortBy});
@@ -30,8 +36,8 @@ export default function App() {
     }
     
     return (
-    // base: two rows with one column
-    // lg: two rows, with row-2 splitted into two columns
+    // base represents a mobile device rendering a NavBar and Main section
+    // lg represents a PC rendering a Navbar and Main section, where main is further splitted into two columns
     <Grid templateAreas={{
         base: '"nav" "main"', lg: '"nav nav" "lhs main"'
     }} templateColumns={{
@@ -46,6 +52,7 @@ export default function App() {
             </GridItem>
         </Show>
         <GridItem area='main'>
+            <GameHeading gameState={gameQuery}/>
             <HStack spacing={3} marginBottom={3} paddingLeft={3}>
                 <PlatformSelector onSelectPlatform={onSelectPlatform}/>
                 <SortSelector onSort={onSort}/>

@@ -1,5 +1,5 @@
 import { Card, CardBody, Heading, HStack, Image, Text } from "@chakra-ui/react";
-import { Game } from "../hooks/fetchGames"
+import { Game } from "../fetch-hooks/fetchGames"
 import PlatformIconTray from "./PlatformIconTray";
 import CriticScore from "./CriticScore";
 import placeholder from '../assets/placeholder.webp'
@@ -24,19 +24,19 @@ export default function GameCard({game}: Props) {
     <Card borderRadius={10} overflow='hidden'>
         <Image src={croppedImgURL}/>
         <CardBody>
-            <Heading fontSize='xl'>{game.name}</Heading>
-
-            <HStack justifyContent={"space-between"}>
-                <HStack marginY={1}>
+            
+            <HStack justifyContent={"space-between"} marginBottom={2}>
+                <HStack>
                     {game.parent_platforms
                         ? game.parent_platforms.map(({platform}) =>
                             <PlatformIconTray key={platform.id} platform={platform}/>)
                         : null
                     }
                 </HStack>
-
                 <CriticScore score={game.metacritic}/>
             </HStack>
+
+            <Heading fontSize='xl'>{game.name}</Heading>
 
         </CardBody>
     </Card>

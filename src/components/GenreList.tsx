@@ -1,15 +1,15 @@
 import { HStack, Image, List, ListItem, Spinner, Button } from '@chakra-ui/react'
-import fetchGenres from '../hooks/fetchGenres'
+import fetchGenres, { Genre } from '../fetch-hooks/fetchGenres'
 
 interface Props {
-    onSelectGenre: (genreName: string) => void;
-    selectedGenre: string | null;
+    onSelectGenre: (genreName: Genre) => void;
+    selectedGenre: Genre | null;
 }
 
 export default function GenreList({onSelectGenre, selectedGenre}: Props) {
-    const {data, isLoading, error} = fetchGenres();
-    if (isLoading) return <Spinner/>
-    if (error) return null
+    const { data } = fetchGenres();
+    // if (isLoading) return <Spinner/>
+    // if (error) return null
 
   return (
     <List>
@@ -20,8 +20,8 @@ export default function GenreList({onSelectGenre, selectedGenre}: Props) {
             return (
             <ListItem key={genre.id} paddingY={'10px'}>
                 <HStack>
-                    <Image src={croppedImgURL} boxSize={'32px'} borderRadius={8} marginRight={2}/>
-                    <Button fontWeight={genre.slug === selectedGenre ? 'extrabold' : 'normal'} onClick={() => onSelectGenre(genre.slug)} variant={'link'} fontSize={'md'}>{genre.name}</Button>
+                    <Image src={croppedImgURL} objectFit={'cover'} boxSize={'32px'} borderRadius={8} marginRight={2}/>
+                    <Button fontWeight={genre.slug === selectedGenre?.slug ? 'extrabold' : 'normal'} onClick={() => onSelectGenre(genre)} variant={'link'} fontSize={'md'}>{genre.name}</Button>
                 </HStack>
             </ListItem>
             );
