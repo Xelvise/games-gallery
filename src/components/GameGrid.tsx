@@ -11,6 +11,8 @@ interface Props {
 export default function GameGrid({ gameQuery }: Props) {
     const {data, error, isLoading} = fetchGames(gameQuery);
 
+    if (error) return <Text>{error}</Text>
+
     return (
         <Box>
             {isLoading && 
