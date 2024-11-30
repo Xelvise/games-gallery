@@ -18,7 +18,7 @@ export interface Platform {
 export default function fetchGames(gameQuery: GameQuerySchema) {
     return fetchData<Game>(
         '/games', 
-        { params: { genres: gameQuery.genre?.slug, platforms: gameQuery.platform?.id, ordering: gameQuery.sortOrder, search: gameQuery.searchString }}, 
+        { params: { page: gameQuery.page, genres: gameQuery.genre?.slug, platforms: gameQuery.platform?.id, ordering: gameQuery.sortOrder, search: gameQuery.searchString }}, 
         [gameQuery]
     )
 }

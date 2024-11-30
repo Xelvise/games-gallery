@@ -6,9 +6,10 @@ import { Platform } from '../fetch-hooks/fetchGames';
 
 interface Props {
     onSelectPlatform: (platform: Platform|null) => void;
+    selectedPlatform: Platform|null;
 }
 
-export default function PlatformSelector({onSelectPlatform}: Props) {
+export default function PlatformSelector({onSelectPlatform, selectedPlatform}: Props) {
     const [platformName, setPlatformName] = useState('All Platforms');
     const { data } = fetchPlatforms();
     const newData = [{id: null, name: 'All Platforms', slug: 'all-platforms'},...data]
@@ -18,7 +19,13 @@ export default function PlatformSelector({onSelectPlatform}: Props) {
         <MenuButton as={Button} rightIcon={<BsChevronDown/>}>{platformName}</MenuButton>
         <MenuList>
             {newData.map(platform =>
-                <MenuItem key={platform.id} onClick={() => {setPlatformName(platform.name); onSelectPlatform(platform as Platform)}}>
+                <MenuItem 
+                    key={platform.id} 
+                    onClick={() => {
+                        setPlatformName(platform.name); 
+                        selectedPlatform !== platform && onSelectPlatform(platform as Platform)}
+                    }
+                >
                     {platform.name}
                 </MenuItem>
             )}

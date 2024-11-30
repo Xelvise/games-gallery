@@ -21,7 +21,14 @@ export default function GenreList({onSelectGenre, selectedGenre}: Props) {
             <ListItem key={genre.id} paddingY={'10px'}>
                 <HStack>
                     <Image src={croppedImgURL} objectFit={'cover'} boxSize={'32px'} borderRadius={8} marginRight={2}/>
-                    <Button fontWeight={genre.slug === selectedGenre?.slug ? 'extrabold' : 'normal'} onClick={() => onSelectGenre(genre)} variant={'link'} fontSize={'md'}>{genre.name}</Button>
+                    <Button 
+                        fontWeight={genre.slug === selectedGenre?.slug ? 'extrabold' : 'normal'} 
+                        onClick={() => selectedGenre !== genre && onSelectGenre(genre)} 
+                        variant={'link'} 
+                        fontSize={'md'}
+                    >
+                        {genre.name}
+                    </Button>
                 </HStack>
             </ListItem>
             );

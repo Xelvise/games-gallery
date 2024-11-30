@@ -2,18 +2,21 @@ import { Input, InputGroup, InputLeftElement, InputRightElement } from "@chakra-
 import { useRef } from "react";
 import { BsSearch } from "react-icons/bs";
 import { VscClearAll } from "react-icons/vsc";
+import { GameQuerySchema } from "../App";
 
 export interface SearchProps {
     onSearch: (search: string | null) => void;
+    searchString: GameQuerySchema['searchString'];
 }
 
-export default function SearchInput({ onSearch }: SearchProps) {
+export default function SearchInput({ onSearch, searchString }: SearchProps) {
     const ref = useRef<HTMLInputElement>(null);
 
     const resetInput = () => {
         if (ref.current) {
             ref.current.value = '';
-            onSearch(null);
+        // If searchString has already been set to null, then there's no need updating the state again 
+            searchString && onSearch(null);
         }
     };
 

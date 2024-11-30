@@ -3,15 +3,17 @@ import fetchGames, { Game } from '../fetch-hooks/fetchGames';
 import GameCard from './GameCard';
 import GameCardSkeleton from './GameCardSkeleton';
 import { GameQuerySchema } from '../App';
+import { NavigationSchema } from '../fetch-hooks/fetchData';
 
 interface Props {
     gameQuery: GameQuerySchema;
+    saveNavParams: (navigation: NavigationSchema) => void;
 }
 
-export default function GameGrid({ gameQuery }: Props) {
-    const {data, error, isLoading} = fetchGames(gameQuery);
-
+export default function GameGrid({ gameQuery, saveNavParams }: Props) {
+    const {data, navParams, error, isLoading} = fetchGames(gameQuery);
     if (error) return <Text>{error}</Text>
+    saveNavParams(navParams);
 
     return (
         <Box>

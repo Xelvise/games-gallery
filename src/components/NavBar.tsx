@@ -5,11 +5,11 @@ import ColorModeSwitch from './ColorModeSwitch'
 import SearchInput from './SearchInput'
 import { SearchProps } from './SearchInput'
 
-export default function NavBar({onSearch}: SearchProps) {
+export default function NavBar({onSearch, searchString}: SearchProps) {
   return (
       <HStack padding={5}>
         <Image src={logo} boxSize='60px'></Image>
-        <SearchInput onSearch={onSearch}/>
+        <SearchInput onSearch={onSearch} searchString={searchString}/>
         <ColorModeSwitch/>
       </HStack>
   )
