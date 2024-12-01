@@ -31,16 +31,16 @@ export default function App() {
         setGameQuery({...gameQuery, page: pageNo});
     }
     const onSelectGenre = (genreName: Genre) => {
-        setGameQuery({...gameQuery, genre: genreName});
+        setGameQuery({...gameQuery, genre: genreName, page: null});
     }
     const onSelectPlatform = (platform: Platform|null) => {
-        setGameQuery({...gameQuery, platform: platform});
+        setGameQuery({...gameQuery, platform: platform, page: null});
     }
     const onSort = (sortBy: string|null) => {
         setGameQuery({...gameQuery, sortOrder: sortBy});
     }
     const onSearch = (query: string|null) => {
-        setGameQuery({...gameQuery, searchString: query});
+        setGameQuery({...gameQuery, searchString: query, page: null});
     }
     
     return (

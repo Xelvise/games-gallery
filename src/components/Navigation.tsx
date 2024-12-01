@@ -9,14 +9,20 @@ interface Props {
 
 export default function Navigation({navURLParams, onNavigate}: Props) {
     let {next, previous} = navURLParams;
-    next = next && next.split('page=')[1]
-    previous = previous && previous.split('page=')[1] || '0'
+// The page no. is the first character[0] of the second string[1], after '...page=' has been extracted
+    next = next && next.split('page=')[1][0]
+// If previous variable is truthy with a page no., the page state is updated with the extracted value.
+// But if previous variable has no page no. (i.e, set to '1'), page state is set to null
+// However, If previous is falsy, Previous button is disabled
+    if (previous) {
+        previous = previous.includes('page=') ? previous.split('page=')[1][0] : '1';
+    }
 
     return (
     <HStack spacing={5}>
         <Button 
             leftIcon={<TbArrowNarrowLeft />} 
-            onClick={() => previous === '0' ? onNavigate(null) : onNavigate(previous)} 
+            onClick={() => previous === '1' ? onNavigate(null) : onNavigate(previous)} 
             isDisabled={previous ? false : true} 
             colorScheme='white' 
             variant='outline'
