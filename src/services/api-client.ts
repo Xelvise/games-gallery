@@ -1,4 +1,5 @@
 import axios from 'axios';
+require('dotenv').config();
 
 export default axios.create({
   baseURL: 'https://api.rawg.io/api',
@@ -6,6 +7,6 @@ export default axios.create({
     'Content-Type': 'application/json',
   },
   params: {
-    key: '0ba4280879b04d2ea65d331932e9b989'
+    key: process.env.RAWG_API_KEY
   }
 });
