@@ -7,13 +7,17 @@ interface Props {
 }
 
 export default function GenreList({onSelectGenre, selectedGenre}: Props) {
-    const { data } = fetchGenres();
-    // if (isLoading) return <Spinner/>
-    // if (error) return null
+    const { data: response, isLoading, error } = fetchGenres();
+    if (isLoading) return <Spinner/>
+    if (error) {
+        console.log(error.message); 
+        return null
+    }
+    const genres = response?.results;
 
   return (
     <List>
-        {data.map( genre => {
+        {genres?.map( genre => {
             const splittedURL = genre.image_background.split('games');
             const croppedImgURL = splittedURL[1] ? splittedURL[0] + 'crop/600/400/games' + splittedURL[1] : genre.image_background;
 

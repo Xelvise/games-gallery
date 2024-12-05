@@ -1,6 +1,6 @@
 import { Button, HStack } from "@chakra-ui/react";
 import { TbArrowNarrowLeft, TbArrowNarrowRight } from "react-icons/tb";
-import { NavigationSchema } from "../fetch-hooks/fetchData"
+import { NavigationSchema } from "./GameGrid";
 
 interface Props {
     navURLParams: NavigationSchema;
@@ -9,11 +9,14 @@ interface Props {
 
 export default function Navigation({navURLParams, onNavigate}: Props) {
     let {next, previous} = navURLParams;
-// The page no. is the first character[0] of the second string[1], after '...page=' has been extracted
-    next = next && next.split('page=')[1][0]
-// If previous variable is truthy with a page no., the page state is updated with the extracted value.
-// But if previous variable has no page no. (i.e, set to '1'), page state is set to null
-// However, If previous is falsy, Previous button is disabled
+// The page no. is derived from the first one, two or three numeric characters in second string[1], after '...page=' has been extracted
+    if (next) {
+        const match = next.match(/page=(\d{1,3})/);
+        next = match ? match[1] : null;
+    }
+    // If previous variable is truthy with a page no., the page state is updated with the extracted value.
+    // But if previous variable has no page no. (i.e, set to '1'), page state is set to null
+    // However, If previous is falsy, Previous button is disabled
     if (previous) {
         previous = previous.includes('page=') ? previous.split('page=')[1][0] : '1';
     }

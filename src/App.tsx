@@ -6,9 +6,9 @@ import { useState } from "react";
 import PlatformSelector from "./components/PlatformSelector";
 import SortSelector from "./components/SortSelector";
 import { Genre } from "./fetch-hooks/fetchGenres";
-import { Platform } from "./fetch-hooks/fetchGames";
+import { Platform } from "./fetch-hooks/fetchPlatforms";
 import GameHeading from "./components/GameHeading";
-import { NavigationSchema } from "./fetch-hooks/fetchData";
+import { NavigationSchema } from "./components/GameGrid";
 import Navigation from "./components/Navigation";
 
 export interface GameQuerySchema {
@@ -23,7 +23,7 @@ export default function App() {
     const [gameQuery, setGameQuery] = useState<GameQuerySchema>({} as GameQuerySchema);
     const [navURLParams, setNavURLParams] = useState<NavigationSchema>({} as NavigationSchema);
 
-    // At first, gameQuery is initialized to a GameQuery object where each property (genre, platform, sortOrder, searchString) is set to null
+    // At first, gameQuery is initialized to an empty GameQuery object
     // Hence, gameQuery is an object of state variables which gets updated by the user's actions
 
     // For the following callbacks, gameQuery object is spread into its individual properties, appending an updated state variable
@@ -40,8 +40,14 @@ export default function App() {
         setGameQuery({...gameQuery, sortOrder: sortBy});
     }
     const onSearch = (query: string|null) => {
-        setGameQuery({...gameQuery, searchString: query, page: null});
+        setGameQuery({...gameQuery, searchString: query, genre: null, platform: null, page: null});
     }
+
+    const saveNavParams = (navParam: NavigationSchema) => {
+        // comparing the new navigation parameters with the current state before updating the state.
+        if (navParam.previous !== navURLParams.previous || navParam.next !== navURLParams.next)
+            setNavURLParams(navParam);
+    };
     
     return (
     // base represents a mobile device rendering a NavBar and Main section
@@ -68,8 +74,8 @@ export default function App() {
                 </HStack>
                 <Navigation navURLParams={navURLParams} onNavigate={onNavigate}/>
             </HStack>
-            <GameGrid gameQuery={gameQuery} saveNavParams={navParam => setNavURLParams(navParam)}/>
+            <GameGrid gameQuery={gameQuery} saveNavParams={saveNavParams}/>
         </GridItem>
     </Grid>
     );
-}
+};
