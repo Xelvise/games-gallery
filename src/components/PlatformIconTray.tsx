@@ -1,4 +1,4 @@
-import { Platform } from "../fetch-hooks/fetchGames"
+import { Platform } from "../fetch-hooks/fetchPlatforms";
 import { Icon } from "@chakra-ui/react"
 import { FaWindows, FaPlaystation, FaXbox, FaApple, FaLinux, FaAndroid } from 'react-icons/fa'
 import { MdPhoneIphone } from 'react-icons/md'
