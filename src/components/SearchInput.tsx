@@ -2,11 +2,10 @@ import { Input, InputGroup, InputLeftElement, InputRightElement } from "@chakra-
 import { useRef } from "react";
 import { BsSearch } from "react-icons/bs";
 import { VscClearAll } from "react-icons/vsc";
-import { GameQuerySchema } from "../App";
 
 export interface SearchProps {
-    onSearch: (search: string | null) => void;
-    searchString: GameQuerySchema['searchString'];
+    onSearch: (search: string|null) => void;
+    searchString: string|null;
 }
 
 export default function SearchInput({ onSearch, searchString }: SearchProps) {

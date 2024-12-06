@@ -3,7 +3,7 @@ import APIClient, { ResponseSchema } from "../services/api-client";
 import platforms from '../data/platforms'
 
 export interface Platform {
-    id: number;
+    id: number|null;
     name: string;
     slug: string;
 }

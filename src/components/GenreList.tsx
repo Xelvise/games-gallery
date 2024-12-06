@@ -2,11 +2,11 @@ import { HStack, Image, List, ListItem, Spinner, Button } from '@chakra-ui/react
 import fetchGenres, { Genre } from '../fetch-hooks/fetchGenres'
 
 interface Props {
-    onSelectGenre: (genreName: Genre) => void;
-    selectedGenre: Genre | null;
+    onSelectGenre: (genre: number) => void;
+    selectedGenreId: number|null;
 }
 
-export default function GenreList({onSelectGenre, selectedGenre}: Props) {
+export default function GenreList({onSelectGenre, selectedGenreId}: Props) {
     const { data: response, isLoading, error } = fetchGenres();
     if (isLoading) return <Spinner/>
     if (error) {
@@ -26,9 +26,9 @@ export default function GenreList({onSelectGenre, selectedGenre}: Props) {
                 <HStack>
                     <Image src={croppedImgURL} objectFit={'cover'} boxSize={'32px'} borderRadius={8} marginRight={2}/>
                     <Button 
-                        fontWeight={genre.slug === selectedGenre?.slug ? 'extrabold' : 'normal'} 
-                        onClick={() => selectedGenre !== genre && onSelectGenre(genre)} 
-                        variant={'link'} 
+                        fontWeight={genre.id === selectedGenreId ? 'extrabold' : 'normal'} 
+                        onClick={() => selectedGenreId !== genre.id && onSelectGenre(genre.id)} 
+                        variant={'link'}
                         fontSize={'md'}
                     >
                         {genre.name}
