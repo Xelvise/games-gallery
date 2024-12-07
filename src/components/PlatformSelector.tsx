@@ -1,16 +1,16 @@
 import { Button, Menu, MenuButton, MenuList, MenuItem, Spinner } from '@chakra-ui/react'
 import { BsChevronDown } from 'react-icons/bs'
 import fetchPlatforms from '../fetch-hooks/fetchPlatforms'
-import { useState } from 'react';
-import { Platform } from '../fetch-hooks/fetchPlatforms';
 
 interface Props {
     onSelectPlatform: (platformId: number|null) => void;
     selectedPlatformId: number|null;
-}
+    onSelectCallback: {
+        platformName: string;
+        Fn: (name: string) => void};
+};
 
-export default function PlatformSelector({onSelectPlatform, selectedPlatformId}: Props) {
-    const [platformName, setPlatformName] = useState('All Platforms');
+export default function PlatformSelector({onSelectPlatform, selectedPlatformId, onSelectCallback:{platformName, Fn}}: Props) {
     const { data: response, error } = fetchPlatforms();
     if (error) {
         console.log(error.message); 
@@ -27,7 +27,7 @@ export default function PlatformSelector({onSelectPlatform, selectedPlatformId}:
                 <MenuItem 
                     key={platform.id} 
                     onClick={() => {
-                        setPlatformName(platform.name);
+                        Fn(platform.name);
                         // If platform hasn't already been selected
                         selectedPlatformId !== platform.id && onSelectPlatform(platform.id)}
                     }

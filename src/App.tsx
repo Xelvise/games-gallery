@@ -19,7 +19,7 @@ export interface GameQuerySchema {
 
 export default function App() {
     const [gameQuery, setGameQuery] = useState<GameQuerySchema>({page: null, genreId: null, platformId: null, sortOrder: null, searchString: null});
-    const [navURLParams, setNavURLParams] = useState<NavigationSchema>({} as NavigationSchema);
+    const [platformName, setPlatformName] = useState('All Platforms');
 
     // At first, gameQuery is initialized to an empty GameQuery object
     // Hence, gameQuery is an object of state variables which gets updated by the user's actions
@@ -39,13 +39,14 @@ export default function App() {
     }
     const onSearch = (query: string|null) => {
         setGameQuery({...gameQuery, searchString: query, genreId: null, platformId: null});//, page: '1'});
+        setPlatformName('All Platforms');
     }
 
-    const saveNavParams = (navParam: NavigationSchema) => {
-        // comparing the new navigation parameters with the current state before updating the state.
-        if (navParam.previous !== navURLParams.previous || navParam.next !== navURLParams.next)
-            setNavURLParams(navParam);
-    };
+    // const saveNavParams = (navParam: NavigationSchema) => {
+    //     // comparing the new navigation parameters with the current state before updating the state.
+    //     if (navParam.previous !== navURLParams.previous || navParam.next !== navURLParams.next)
+    //         setNavURLParams(navParam);
+    // };
     
     return (
     // base represents a mobile device rendering a NavBar and Main section
@@ -68,10 +69,10 @@ export default function App() {
             <GameHeading gameState={gameQuery}/>
             <HStack justifyContent={'space-between'} paddingRight={5}>
                 <HStack spacing={3} paddingLeft={3}>
-                    <PlatformSelector onSelectPlatform={onSelectPlatform} selectedPlatformId={gameQuery.platformId}/>
+                    <PlatformSelector onSelectPlatform={onSelectPlatform} selectedPlatformId={gameQuery.platformId} onSelectCallback={{platformName, Fn: name => setPlatformName(name)}}/>
                     <SortSelector onSort={onSort} selectedOrder={gameQuery.sortOrder}/>
                 </HStack>
-                <Navigation navURLParams={navURLParams} onNavigate={onNavigate}/>
+                {/* <Navigation navURLParams={navURLParams} onNavigate={onNavigate}/> */}
             </HStack>
             <GameGrid gameQuery={gameQuery} />
         </GridItem>
