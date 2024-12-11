@@ -2,20 +2,20 @@ import { Input, InputGroup, InputLeftElement, InputRightElement } from "@chakra-
 import { useRef } from "react";
 import { BsSearch } from "react-icons/bs";
 import { VscClearAll } from "react-icons/vsc";
+import useGlobalStateStore from "../state-store";
 
-export interface SearchProps {
-    onSearch: (search: string|null) => void;
-    searchString: string|null;
-}
-
-export default function SearchInput({ onSearch, searchString }: SearchProps) {
+export default function SearchInput() {
+    // A selector "s" is used to select the updater function out of the entire state object.
+    // By so doing, this component is dependent on setSearchText() only, for a rerender to take place.
+    const setSearchText = useGlobalStateStore(store => store.setSearchText);
+    const searchText = useGlobalStateStore(store => store.gameQuery.searchText);
     const ref = useRef<HTMLInputElement>(null);
 
     const resetInput = () => {
         if (ref.current) {
             ref.current.value = '';
-        // If searchString has already been set to null, then there's no need updating the state again 
-            searchString && onSearch(null);
+        // If searchText has already been set to null, then there's no need updating the state again 
+            searchText && setSearchText(null);
         }
     };
 
@@ -24,7 +24,7 @@ export default function SearchInput({ onSearch, searchString }: SearchProps) {
             event.preventDefault();
             if (ref.current) {
                 const trimmedValue = ref.current.value.trim();
-                trimmedValue ? onSearch(trimmedValue) : ref.current.value = '';
+                trimmedValue ? setSearchText(trimmedValue) : ref.current.value = '';
             }
         }}>
             <InputGroup>

@@ -1,7 +1,7 @@
-import { GameQuerySchema } from "../App";
 import { useInfiniteQuery as InfiniteFetchHook } from "@tanstack/react-query";
 import APIClient, { ResponseSchema } from "../services/api-client";
 import { Platform } from "./fetchPlatforms";
+import { GameQuerySchema } from "../state-store";
 
 export interface Game {
     id: number;
@@ -12,7 +12,6 @@ export interface Game {
 }
 
 const APIclient = new APIClient<Game>('/games')
-
 export default function fetchGames(gameQuery: GameQuerySchema) {
     return InfiniteFetchHook<ResponseSchema<Game>, Error>({
         queryKey: Object.keys(gameQuery).length !== 0 
@@ -20,7 +19,7 @@ export default function fetchGames(gameQuery: GameQuerySchema) {
             : ['games'],
 
         queryFn: ({pageParam = 1}) => APIclient.fetchData({
-            params: { page: pageParam, genres: gameQuery.genreId, platforms: gameQuery.platformId, ordering: gameQuery.sortOrder, search: gameQuery.searchString }
+            params: { page: pageParam, genres: gameQuery.genreId, platforms: gameQuery.platformId, ordering: gameQuery.sortOrder, search: gameQuery.searchText }
         }),
 
         getNextPageParam: (lastPage, allPages) => {

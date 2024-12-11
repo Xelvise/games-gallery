@@ -1,14 +1,11 @@
 import { Menu, MenuButton, Button, MenuList, MenuItem } from "@chakra-ui/react";
-import { useState } from "react";
 import { BsChevronDown } from "react-icons/bs";
+import useGlobalStateStore from "../state-store";
 
-interface Props {
-    onSort: (sort: string|null) => void;
-    selectedOrder: string|null;
-}
+export default function SortSelector() {
+    const orderingState = useGlobalStateStore(store => store.orderingState);
+    const setOrderingState = useGlobalStateStore(store => store.setOrderingState);
 
-export default function SortSelector({onSort, selectedOrder}: Props) {
-    const [orderingState, setOrderingState] = useState('Relevance')
     const sortOrders = [
         {label: 'Relevance', value: null},
         {label: 'Date Added', value: '-added'},
@@ -16,7 +13,10 @@ export default function SortSelector({onSort, selectedOrder}: Props) {
         {label: 'Release date', value: '-released'},
         {label: 'Popularity', value: 'metacritic'},
         {label: 'Average rating', value: 'rating'},
-    ]
+    ];
+
+    const setSortOrder = useGlobalStateStore(store => store.setSortOrder);
+    const selectedOrder = useGlobalStateStore(store => store.gameQuery.sortOrder);
 
   return (
     <Menu>
@@ -27,7 +27,7 @@ export default function SortSelector({onSort, selectedOrder}: Props) {
                     key={index} 
                     onClick={() => {
                         setOrderingState(order.label); 
-                        selectedOrder !== order.value && onSort(order.value)}
+                        selectedOrder !== order.value && setSortOrder(order.value)}
                     }
                 >
                     {order.label}

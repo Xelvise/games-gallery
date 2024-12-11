@@ -1,18 +1,15 @@
-import { Box, Button, SimpleGrid, Spinner, Text } from '@chakra-ui/react';
+import { Box, SimpleGrid, Spinner, Text } from '@chakra-ui/react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import fetchGames, { Game } from '../fetch-hooks/fetchGames';
+import fetchGames from '../fetch-hooks/fetchGames';
 import GameCard from './GameCard';
 import GameCardSkeleton from './GameCardSkeleton';
-import { GameQuerySchema } from '../App';
 import { Fragment } from "react";
-import { NavigationSchema } from './Navigation';
+// import { NavigationSchema } from './Navigation';
+import useGlobalStateStore from '../state-store';
 
-interface Props {
-    gameQuery: GameQuerySchema;
-    saveNavParams?: (navigation: NavigationSchema) => void;
-}
-
-export default function GameGrid({ gameQuery }: Props) {
+export default function GameGrid() {
+    const gameQuery = useGlobalStateStore(store => store.gameQuery);
+    
     const {data, error, isLoading, hasNextPage, fetchNextPage} = fetchGames(gameQuery);
     if (error) return <Text>{error.message}</Text>
     const gamePages = data?.pages

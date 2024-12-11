@@ -1,13 +1,13 @@
 import { HStack, Image, List, ListItem, Spinner, Button } from '@chakra-ui/react'
-import fetchGenres, { Genre } from '../fetch-hooks/fetchGenres'
+import fetchGenres from '../fetch-hooks/fetchGenres'
+import useGlobalStateStore from '../state-store';
 
-interface Props {
-    onSelectGenre: (genre: number) => void;
-    selectedGenreId: number|null;
-}
-
-export default function GenreList({onSelectGenre, selectedGenreId}: Props) {
+export default function GenreList() {
     const { data: response, isLoading, error } = fetchGenres();
+
+    const setGenreId = useGlobalStateStore(store => store.setGenreId);
+    const selectedGenreId = useGlobalStateStore(store => store.gameQuery.genreId);
+
     if (isLoading) return <Spinner/>
     if (error) {
         console.log(error.message); 
@@ -27,7 +27,7 @@ export default function GenreList({onSelectGenre, selectedGenreId}: Props) {
                     <Image src={croppedImgURL} objectFit={'cover'} boxSize={'32px'} borderRadius={8} marginRight={2}/>
                     <Button 
                         fontWeight={genre.id === selectedGenreId ? 'extrabold' : 'normal'} 
-                        onClick={() => selectedGenreId !== genre.id && onSelectGenre(genre.id)} 
+                        onClick={() => selectedGenreId !== genre.id && setGenreId(genre.id)} 
                         variant={'link'}
                         fontSize={'md'}
                     >

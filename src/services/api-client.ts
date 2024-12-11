@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
-export const axiosInstance = axios.create({
+const axiosInstance = axios.create({
     baseURL: 'https://api.rawg.io/api',
     headers: {
       'Content-Type': 'application/json',
