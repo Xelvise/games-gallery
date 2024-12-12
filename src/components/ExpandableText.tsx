@@ -1,11 +1,10 @@
-import { ReactNode, useState } from "react";
-import { Button, Heading, Text } from "@chakra-ui/react";
+import { useState } from "react";
+import { Button, Text } from "@chakra-ui/react";
 
 interface Props {
     children: string;
     maxChars?: number 
 };
-
 
 export default function ExpandableText({children: text, maxChars=300}: Props) {
     const [isExpanded, setExpanded] = useState(false)
