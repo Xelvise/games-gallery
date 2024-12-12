@@ -28,4 +28,7 @@ export default class APIClient<T> {
     postData = (payload?: T) => {
         return axiosInstance.post<ResponseSchema<T>>(this.path, payload).then(res => res.data);
     }
+    fetchDetailsByID = (id: string, queryParams?: AxiosRequestConfig) => {
+        return axiosInstance.get<T>(`${this.path}/${id}`, {...queryParams}).then(res => res.data);
+    }
 }

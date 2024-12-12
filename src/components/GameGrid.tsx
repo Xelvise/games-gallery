@@ -11,8 +11,8 @@ export default function GameGrid() {
     const gameQuery = useGlobalStateStore(store => store.gameQuery);
     
     const {data, error, isLoading, hasNextPage, fetchNextPage} = fetchGames(gameQuery);
-    if (error) return <Text>{error.message}</Text>
-    const gamePages = data?.pages
+    if (error || !data) return <Text>{error?.message}</Text>
+    const gamePages = data.pages
 
     const fetchedGamesCount = gamePages?.reduce((acc, page) => acc + page.results.length, 0) || 0;
 
@@ -25,7 +25,7 @@ export default function GameGrid() {
                 )}
             </SimpleGrid>}
             
-            {gamePages && gamePages[0].results.length === 0 && 
+            {gamePages[0].results.length === 0 && 
             <Text fontSize={'3xl'} paddingLeft={700} paddingRight={700} whiteSpace={'nowrap'}>
                 No games found
             </Text>}
@@ -37,7 +37,7 @@ export default function GameGrid() {
                 loader={<Spinner />}
             >
                 <SimpleGrid columns={{ sm: 2, md: 3, lg: 4, xl: 5 }} spacing={6} padding={5}>
-                    {gamePages?.map((page, index) =>
+                    {gamePages.map((page, index) =>
                         <Fragment key={index}>
                             {page.results.map(game =>
                                 <GameCard key={game.id} game={game} />

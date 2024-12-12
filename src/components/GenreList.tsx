@@ -13,11 +13,11 @@ export default function GenreList() {
         console.log(error.message); 
         return null
     }
-    const genres = response?.results;
+    const genres = response.results;
 
   return (
     <List>
-        {genres?.map( genre => {
+        {genres.map( genre => {
             const splittedURL = genre.image_background.split('games');
             const croppedImgURL = splittedURL[1] ? splittedURL[0] + 'crop/600/400/games' + splittedURL[1] : genre.image_background;
 

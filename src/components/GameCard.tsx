@@ -3,6 +3,7 @@ import { Game } from "../fetch-hooks/fetchGames"
 import PlatformIconTray from "./PlatformIconTray";
 import CriticScore from "./CriticScore";
 import placeholder from '../assets/placeholder.webp'
+import { Link } from "react-router-dom";
 
 interface Props {
     game: Game;
@@ -21,7 +22,7 @@ export default function GameCard({game}: Props) {
     }
 
     return (
-    <Card borderRadius={10} overflow='hidden'>
+    <Card borderRadius={10} overflow='hidden' _hover={{transform: 'scale(1.03)', transition: 'transform .15s ease-in'}}>
         <Image src={croppedImgURL}/>
         <CardBody>
             
@@ -36,7 +37,9 @@ export default function GameCard({game}: Props) {
                 <CriticScore score={game.metacritic}/>
             </HStack>
 
-            <Heading fontSize='xl'>{game.name}</Heading>
+            <Link to={`/games/${game.slug}`}>
+                <Heading fontSize='xl'>{game.name}</Heading>
+            </Link>
 
         </CardBody>
     </Card>
