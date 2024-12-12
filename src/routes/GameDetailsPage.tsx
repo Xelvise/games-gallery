@@ -1,8 +1,11 @@
 import { useParams } from "react-router-dom"
 import fetchGameDetails from "../fetch-hooks/fetchGameDetails"
-import { Heading, Spinner, Text } from "@chakra-ui/react";
+import { Button, Heading, Spinner, Text } from "@chakra-ui/react";
+import { useState } from "react";
+import ExpandableText from "../components/ExpandableText";
 
 export default function GameDetailsPage() {
+    const [isExpanded, setExpanded] = useState(false)
     const { slug } = useParams();
     const { data: game, error, isLoading } = fetchGameDetails(slug!);
 
@@ -12,7 +15,7 @@ export default function GameDetailsPage() {
     return (
     <>
         <Heading paddingBottom={4}>{game.name}</Heading>
-        <Text>{game.description_raw}</Text>
+        <ExpandableText>{game.description_raw}</ExpandableText>
     </>
     )
 }
