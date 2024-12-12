@@ -1,12 +1,7 @@
 import { useQuery as fetchHook } from "@tanstack/react-query";
 import APIClient, { ResponseSchema } from "../services/api-client";
-import platforms from '../data/platforms'
-
-export interface Platform {
-    id: number|null;
-    name: string;
-    slug: string;
-}
+import platforms from '../local-data/platforms'
+import { Platform } from "../Interfaces";
 
 const APIclient = new APIClient<Platform>('/platforms')
 

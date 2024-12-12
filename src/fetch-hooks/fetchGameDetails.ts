@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import APIClient from "../services/api-client";
-import { Game } from "./fetchGames";
+import { Game } from "../Interfaces";
 
 const APIclient = new APIClient<Game>('/games');
 export default function fetchGameDetails(gameId:string) {

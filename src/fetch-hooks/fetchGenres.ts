@@ -1,15 +1,8 @@
 import { useQuery as fetchHook } from "@tanstack/react-query";
 import APIClient, { ResponseSchema } from "../services/api-client";
-import genres from '../data/genres'
+import genres from '../local-data/genres'
+import { Genre } from "../Interfaces";
 
-
-export interface Genre {
-    id: number;
-    name: string;
-    slug: string;
-    games_count: number;
-    image_background: string;
-}
 
 const APIclient = new APIClient<Genre>('/genres')
 
