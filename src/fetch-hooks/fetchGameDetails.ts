@@ -2,11 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import APIClient from "../services/api-client";
 import { Game } from "../Interfaces";
 
-const APIclient = new APIClient<Game>('/games');
 export default function fetchGameDetails(gameId:string) {
+    const APIclient = new APIClient<Game>(`/games/${gameId}`);
+
     return useQuery<Game, Error>({
         queryKey: ['game', gameId],
-        queryFn: () => APIclient.fetchDetailsByID(gameId),
-        staleTime: 5 * 60 * 1000,    // 30 mins
+        queryFn: APIclient.fetchDetail,
+        staleTime: 5 * 60 * 1000,    // 5 mins
     });
 };
