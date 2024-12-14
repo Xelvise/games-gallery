@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
+import { ResponseSchema } from '../schemas';
 
 const axiosInstance = axios.create({
     baseURL: 'https://api.rawg.io/api',
@@ -9,13 +10,6 @@ const axiosInstance = axios.create({
       key: import.meta.env.VITE_RAWG_API_KEY
     }
 });
-
-export interface ResponseSchema<T> {
-    count: number;
-    next: string|null;
-    previous: string|null;
-    results: T[];
-}
 
 export default class APIClient<T> {
     path: string;
@@ -31,7 +25,7 @@ export default class APIClient<T> {
     fetchDetail = (queryParams?: AxiosRequestConfig) => {
         return axiosInstance.get<T>(this.path, {...queryParams}).then(res => res.data);
     }
-    fetchTrailers = (queryParams?: AxiosRequestConfig) => {
+    fetchArrayOfItems = (queryParams?: AxiosRequestConfig) => {
         return axiosInstance.get<ResponseSchema<T>>(this.path, {...queryParams}).then(res => res.data.results);
     }
 }

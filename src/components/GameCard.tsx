@@ -1,5 +1,5 @@
 import { Card, CardBody, Heading, HStack, Image, Text } from "@chakra-ui/react";
-import { Game } from "../Interfaces";
+import { Game } from "../schemas";
 import PlatformIconTray from "./PlatformIconTray";
 import CriticScore from "./CriticScore";
 import placeholder from '../assets/placeholder.webp'

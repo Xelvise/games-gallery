@@ -1,5 +1,5 @@
+import { Spinner } from "@chakra-ui/react";
 import fetchGameTrailers from "../fetch-hooks/fetchGameTrailers";
-import { GameTrailer } from "../Interfaces";
 
 interface Props {
     gameId: number|string;
@@ -8,8 +8,9 @@ interface Props {
 export default function TrailerViewer({gameId}: Props) {
     const { data: trailers, error, isLoading } = fetchGameTrailers(gameId);
 
-    if (isLoading) return null;
+    if (isLoading) return <Spinner />;
     if (error || !trailers) return <p>{error.message}</p>
+    const firstTrailer = trailers[0];
 
-    return <video src={trailers[0].data[480]} poster={trailers[0].preview} controls/>
+    return firstTrailer && <video src={firstTrailer.data[480]} poster={firstTrailer.preview} controls />
 }

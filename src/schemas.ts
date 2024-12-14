@@ -1,3 +1,10 @@
+export interface ResponseSchema<T> {
+    count: number;
+    next: string | null;
+    previous: string | null;
+    results: T[];
+}
+
 export interface Game {
     id: number;
     name: string;
@@ -5,9 +12,14 @@ export interface Game {
     genres: Genre[];
     description_raw: string;
     background_image: string;
-    parent_platforms: { platform: Platform; }[];
+    parent_platforms: { platform: Platform }[];
     metacritic: number;
     publishers: Publisher[];
+}
+
+interface Publisher {
+    id: number;
+    name: string;
 }
 
 export interface Genre {
@@ -24,11 +36,6 @@ export interface Platform {
     slug: string;
 }
 
-interface Publisher {
-    id: number;
-    name: string;
-}
-
 export interface GameTrailer {
     id: number;
     name: string;
@@ -36,3 +43,9 @@ export interface GameTrailer {
     data: {480: string, max: string}
 }
 
+export interface Screenshot {
+    image: string;
+    hidden: boolean
+    width?: number;
+    height?: number;
+}

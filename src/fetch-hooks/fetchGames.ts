@@ -1,7 +1,8 @@
 import { useInfiniteQuery as InfiniteFetchHook } from "@tanstack/react-query";
-import APIClient, { ResponseSchema } from "../services/api-client";
+import APIClient from "../services/api-client";
+import { ResponseSchema } from '../schemas';
 import { GameQuerySchema } from "../state-store";
-import { Game } from "../Interfaces";
+import { Game } from "../schemas";
 
 const APIclient = new APIClient<Game>('/games')
 export default function fetchGames(gameQuery: GameQuerySchema) {

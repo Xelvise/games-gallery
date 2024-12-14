@@ -1,4 +1,4 @@
-import { Platform } from "../Interfaces";
+import { Platform } from "../schemas";
 import { Icon } from "@chakra-ui/react"
 import { FaWindows, FaPlaystation, FaXbox, FaApple, FaLinux, FaAndroid } from 'react-icons/fa'
 import { MdPhoneIphone } from 'react-icons/md'

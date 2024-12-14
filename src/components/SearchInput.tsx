@@ -3,6 +3,7 @@ import { useRef } from "react";
 import { BsSearch } from "react-icons/bs";
 import { VscClearAll } from "react-icons/vsc";
 import useGlobalStateStore from "../state-store";
+import { useNavigate } from "react-router-dom";
 
 export default function SearchInput() {
     // A selector "s" is used to select the updater function out of the entire state object.
@@ -10,6 +11,7 @@ export default function SearchInput() {
     const setSearchText = useGlobalStateStore(store => store.setSearchText);
     const searchText = useGlobalStateStore(store => store.gameQuery.searchText);
     const ref = useRef<HTMLInputElement>(null);
+    const navigate = useNavigate();
 
     const resetInput = () => {
         if (ref.current) {
@@ -24,7 +26,9 @@ export default function SearchInput() {
             event.preventDefault();
             if (ref.current) {
                 const trimmedValue = ref.current.value.trim();
-                trimmedValue ? setSearchText(trimmedValue) : ref.current.value = '';
+                trimmedValue 
+                    ? (setSearchText(trimmedValue), navigate('/'))
+                    : ref.current.value = '';
             }
         }}>
             <InputGroup>
